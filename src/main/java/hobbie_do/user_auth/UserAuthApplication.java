@@ -1,4 +1,4 @@
-package com.example.demo;
+package hobbie_do.user_auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
