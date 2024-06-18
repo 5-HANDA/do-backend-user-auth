@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import hobbiedo.user.auth.member.domain.IntegrateAuth;
+import hobbiedo.user.auth.member.domain.Member;
 import hobbiedo.user.auth.member.dto.response.LoginResponseDTO;
 
 @Repository
@@ -45,5 +46,7 @@ public interface MemberRepository extends JpaRepository<IntegrateAuth, Long> {
 	@Query("SELECT i.password FROM IntegrateAuth i WHERE i.member.uuid = :uuid")
 	String findPasswordByUuid(@Param("uuid") String uuid);
 
+	@Query("SELECT m FROM Member m WHERE m.uuid = :uuid")
+	Optional<Member> findByUuid(@Param("uuid") String uuid);
 }
 

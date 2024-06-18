@@ -24,7 +24,10 @@ public enum ErrorStatus implements BaseErrorCode {
 	LOGOUT_FAIL(HttpStatus.BAD_REQUEST, "MEMBER408", "로그아웃 실패"),
 	EMAIL_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER409", "이메일을 찾을 수 없습니다."),
 	NOT_MATCH_PASSWORD(HttpStatus.BAD_REQUEST, "MEMBER410", "기존 비밀번호가 일치하지 않습니다"),
-	NO_EXIST_MEMBER(HttpStatus.NOT_FOUND, "MEMBER411", "가입되지 않은 회원입니다.");
+	NO_EXIST_MEMBER(HttpStatus.NOT_FOUND, "MEMBER411", "가입되지 않은 회원입니다."),
+
+	// 회원 프로필 상세 조회 실패
+	NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "MEMBER412", "회원을 찾을 수 없습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String status;
