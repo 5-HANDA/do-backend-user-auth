@@ -9,6 +9,7 @@ import hobbiedo.user.auth.global.api.code.status.ErrorStatus;
 import hobbiedo.user.auth.global.exception.MemberExceptionHandler;
 import hobbiedo.user.auth.member.domain.Member;
 import hobbiedo.user.auth.member.dto.request.ProfileImageRequestDto;
+import hobbiedo.user.auth.member.dto.request.ProfileMessageRequestDto;
 import hobbiedo.user.auth.member.dto.response.ProfileResponseDto;
 import hobbiedo.user.auth.member.infrastructure.MemberProfileRepository;
 import hobbiedo.user.auth.member.infrastructure.MemberRepository;
@@ -63,4 +64,26 @@ public class ProfileService {
 		memberProfileRepository.save(updateMember);
 	}
 
+	@Transactional
+	public void updateProfileMessage(String uuid,
+		ProfileMessageRequestDto profileMessageRequestDto) {
+
+		Member member = memberProfileRepository.findByUuid(uuid)
+			.orElseThrow(() -> new MemberExceptionHandler(ErrorStatus.NOT_FOUND_MEMBER));
+
+		Member updateMember = Member.builder()
+			.id(member.getId())
+			.name(member.getName())
+			.uuid(member.getUuid())
+			.email(member.getEmail())
+			.phoneNumber(member.getPhoneNumber())
+			.active(member.getActive())
+			.gender(member.getGender())
+			.birth(member.getBirth())
+			.profileMessage(profileMessageRequestDto.getProfileMessage())
+			.imageUrl(member.getImageUrl())
+			.build();
+
+		memberProfileRepository.save(updateMember);
+	}
 }

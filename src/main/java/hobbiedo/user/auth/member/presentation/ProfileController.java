@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import hobbiedo.user.auth.global.api.ApiResponse;
 import hobbiedo.user.auth.member.application.ProfileService;
 import hobbiedo.user.auth.member.dto.request.ProfileImageRequestDto;
+import hobbiedo.user.auth.member.dto.request.ProfileMessageRequestDto;
 import hobbiedo.user.auth.member.dto.response.ProfileResponseDto;
 import hobbiedo.user.auth.member.vo.request.ProfileImageRequestVo;
+import hobbiedo.user.auth.member.vo.request.ProfileMessageRequestVo;
 import hobbiedo.user.auth.member.vo.response.ProfileResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -61,4 +63,21 @@ public class ProfileController {
 		);
 	}
 
+	// 프로필 메시지 수정
+	@PutMapping("/member/profile/message")
+	@Operation(summary = "프로필 메시지 수정", description = "사용자의 프로필 메시지를 수정합니다.")
+	public ApiResponse<Void> updateProfileMessage(
+		@RequestHeader(name = "Uuid") String uuid,
+		@RequestBody ProfileMessageRequestVo profileMessageRequestVo) {
+
+		ProfileMessageRequestDto profileMessageRequestDto = ProfileMessageRequestDto
+			.profileMessageVoToDto(profileMessageRequestVo);
+
+		profileService.updateProfileMessage(uuid, profileMessageRequestDto);
+
+		return ApiResponse.onSuccess(
+			UPDATE_PROFILE_MESSAGE_SUCCESS,
+			null
+		);
+	}
 }
