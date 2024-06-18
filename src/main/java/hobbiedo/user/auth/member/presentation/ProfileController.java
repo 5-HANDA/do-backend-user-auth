@@ -15,6 +15,7 @@ import hobbiedo.user.auth.member.dto.request.ProfileRequestDto;
 import hobbiedo.user.auth.member.dto.response.ProfileResponseDto;
 import hobbiedo.user.auth.member.vo.request.ProfileRequestVo;
 import hobbiedo.user.auth.member.vo.response.ProfileResponseVo;
+import hobbiedo.user.auth.member.vo.response.SignUpProfileResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,20 @@ public class ProfileController {
 		return ApiResponse.onSuccess(
 			UPDATE_PROFILE_SUCCESS,
 			null
+		);
+	}
+
+	// 회원 가입 정보 조회
+	@GetMapping("/member/signup")
+	@Operation(summary = "회원 가입 정보 조회", description = "회원 가입 정보를 조회합니다.")
+	public ApiResponse<SignUpProfileResponseVo> getSignUpProfile(
+		@RequestHeader(name = "Uuid") String uuid) {
+
+		ProfileResponseDto profileResponseDto = profileService.getProfile(uuid);
+
+		return ApiResponse.onSuccess(
+			GET_SIGN_UP_PROFILE_SUCCESS,
+			SignUpProfileResponseVo.profileDtoToSignProfileVo(profileResponseDto)
 		);
 	}
 }
