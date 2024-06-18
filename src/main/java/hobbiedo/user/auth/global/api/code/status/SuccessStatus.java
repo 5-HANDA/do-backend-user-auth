@@ -25,10 +25,8 @@ public enum SuccessStatus implements BaseCode {
 
 	// 회원 프로필 상세 조회 성공
 	GET_PROFILE_DETAIL_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 상세 조회 성공"),
-	// 회원 프로필 사진 수정 성공
-	UPDATE_PROFILE_IMAGE_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 사진 수정 성공"),
-	// 회원 프로필 상태 메시지 수정 성공
-	UPDATE_PROFILE_MESSAGE_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 상태 메시지 수정 성공");
+	// 회원 프로필 수정 성공
+	UPDATE_PROFILE_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 이미지, 상태 메세지 수정 성공");
 
 	private final HttpStatus httpStatus;
 	private final String status;

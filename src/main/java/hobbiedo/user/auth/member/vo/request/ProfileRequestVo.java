@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@Schema(description = "프로필 이미지 업로드 요청")
-public class ProfileImageRequestVo {
+@Schema(description = "프로필 수정 요청")
+public class ProfileRequestVo {
 
 	private String profileImageUrl;
+	private String profileMessage;
 
-	public ProfileImageRequestVo(String profileImageUrl) {
+	public ProfileRequestVo(String profileImageUrl, String profileMessage) {
 		this.profileImageUrl = profileImageUrl;
+		this.profileMessage = profileMessage;
 	}
 }
