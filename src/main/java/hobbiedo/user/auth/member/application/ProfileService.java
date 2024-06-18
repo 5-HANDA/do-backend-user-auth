@@ -8,8 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import hobbiedo.user.auth.global.api.code.status.ErrorStatus;
 import hobbiedo.user.auth.global.exception.MemberExceptionHandler;
 import hobbiedo.user.auth.member.domain.Member;
+import hobbiedo.user.auth.member.dto.request.ProfileImageRequestDto;
 import hobbiedo.user.auth.member.dto.response.ProfileResponseDto;
+import hobbiedo.user.auth.member.infrastructure.MemberProfileRepository;
 import hobbiedo.user.auth.member.infrastructure.MemberRepository;
+import hobbiedo.user.auth.member.vo.request.ProfileImageRequestVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,25 +22,45 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 public class ProfileService {
 
-	private final MemberRepository memberRepository;
+	private final MemberProfileRepository memberProfileRepository;
 
 	public ProfileResponseDto getProfile(String uuid) {
 
-		Optional<Member> member = memberRepository.findByUuid(uuid);
-
-		if (member.isEmpty()) {
-			throw new MemberExceptionHandler(ErrorStatus.NOT_FOUND_MEMBER);
-		}
+		Member member = memberProfileRepository.findByUuid(uuid)
+			.orElseThrow(() -> new MemberExceptionHandler(ErrorStatus.NOT_FOUND_MEMBER));
 
 		return ProfileResponseDto.builder()
-			.uuid(member.get().getUuid())
-			.name(member.get().getName())
-			.email(member.get().getEmail())
-			.phoneNumber(member.get().getPhoneNumber())
-			.birth(member.get().getBirth())
-			.gender(member.get().getGender())
-			.profileImageUrl(member.get().getImageUrl())
-			.profileMessage(member.get().getProfileMessage())
+			.uuid(member.getUuid())
+			.name(member.getName())
+			.email(member.getEmail())
+			.phoneNumber(member.getPhoneNumber())
+			.birth(member.getBirth())
+			.gender(member.getGender())
+			.profileImageUrl(member.getImageUrl())
+			.profileMessage(member.getProfileMessage())
 			.build();
 	}
+
+	@Transactional
+	public void updateProfileImage(String uuid, ProfileImageRequestDto profileImageRequestDto) {
+
+		Member member = memberProfileRepository.findByUuid(uuid)
+			.orElseThrow(() -> new MemberExceptionHandler(ErrorStatus.NOT_FOUND_MEMBER));
+
+		Member updateMember = Member.builder()
+			.id(member.getId())
+			.name(member.getName())
+			.uuid(member.getUuid())
+			.email(member.getEmail())
+			.phoneNumber(member.getPhoneNumber())
+			.active(member.getActive())
+			.gender(member.getGender())
+			.birth(member.getBirth())
+			.profileMessage(member.getProfileMessage())
+			.imageUrl(profileImageRequestDto.getProfileImageUrl())
+			.build();
+
+		memberProfileRepository.save(updateMember);
+	}
+
 }

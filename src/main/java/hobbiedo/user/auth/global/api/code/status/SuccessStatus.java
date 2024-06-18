@@ -24,7 +24,11 @@ public enum SuccessStatus implements BaseCode {
 	GOOGLE_SIGN_UP_SUCCESS(HttpStatus.OK, "MEMBER200", "구글 회원가입에 성공했습니다"),
 
 	// 회원 프로필 상세 조회 성공
-	GET_PROFILE_DETAIL_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 상세 조회 성공");
+	GET_PROFILE_DETAIL_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 상세 조회 성공"),
+	// 회원 프로필 사진 수정 성공
+	UPDATE_PROFILE_IMAGE_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 사진 수정 성공"),
+	// 회원 프로필 상태 메시지 수정 성공
+	UPDATE_PROFILE_MESSAGE_SUCCESS(HttpStatus.OK, "MEMBER200", "회원 프로필 상태 메시지 수정 성공");
 
 	private final HttpStatus httpStatus;
 	private final String status;

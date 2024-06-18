@@ -3,13 +3,17 @@ package hobbiedo.user.auth.member.presentation;
 import static hobbiedo.user.auth.global.api.code.status.SuccessStatus.*;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hobbiedo.user.auth.global.api.ApiResponse;
 import hobbiedo.user.auth.member.application.ProfileService;
+import hobbiedo.user.auth.member.dto.request.ProfileImageRequestDto;
 import hobbiedo.user.auth.member.dto.response.ProfileResponseDto;
+import hobbiedo.user.auth.member.vo.request.ProfileImageRequestVo;
 import hobbiedo.user.auth.member.vo.response.ProfileResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,6 +40,24 @@ public class ProfileController {
 		return ApiResponse.onSuccess(
 			GET_PROFILE_DETAIL_SUCCESS,
 			ProfileResponseVo.profileDtoToProfileVo(profileResponseDto)
+		);
+	}
+
+	// 프로필 사진 url 수정
+	@PutMapping("/member/profile/image")
+	@Operation(summary = "프로필 사진 수정", description = "사용자의 프로필 사진을 수정합니다.")
+	public ApiResponse<Void> updateProfileImage(
+		@RequestHeader(name = "Uuid") String uuid,
+		@RequestBody ProfileImageRequestVo profileImageRequestVo) {
+
+		ProfileImageRequestDto profileImageRequestDto = ProfileImageRequestDto
+			.profileImageVoToDto(profileImageRequestVo);
+
+		profileService.updateProfileImage(uuid, profileImageRequestDto);
+
+		return ApiResponse.onSuccess(
+			UPDATE_PROFILE_IMAGE_SUCCESS,
+			null
 		);
 	}
 
