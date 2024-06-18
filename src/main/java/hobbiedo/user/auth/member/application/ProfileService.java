@@ -43,6 +43,11 @@ public class ProfileService {
 		Member member = memberProfileRepository.findByUuid(uuid)
 			.orElseThrow(() -> new MemberExceptionHandler(ErrorStatus.NOT_FOUND_MEMBER));
 
+		// 상태 메세지가 공백 포함 50자 이상일 경우 예외 처리
+		if (profileRequestDto.getProfileMessage().length() > 52) {
+			throw new MemberExceptionHandler(ErrorStatus.PROFILE_MESSAGE_LENGTH_EXCEED);
+		}
+
 		Member updateMember = Member.builder()
 			.id(member.getId())
 			.name(member.getName())

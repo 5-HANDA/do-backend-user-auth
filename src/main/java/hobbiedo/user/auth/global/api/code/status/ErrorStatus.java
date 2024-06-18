@@ -27,7 +27,9 @@ public enum ErrorStatus implements BaseErrorCode {
 	NO_EXIST_MEMBER(HttpStatus.NOT_FOUND, "MEMBER411", "가입되지 않은 회원입니다."),
 
 	// 회원 프로필 상세 조회 실패
-	NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "MEMBER412", "회원을 찾을 수 없습니다.");
+	NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "MEMBER412", "회원을 찾을 수 없습니다."),
+	// 회원 프로필 메세지가 50자를 초과할 경우
+	PROFILE_MESSAGE_LENGTH_EXCEED(HttpStatus.BAD_REQUEST, "MEMBER413", "상태 메세지는 공백 포함 50자 이내로 입력해주세요");
 
 	private final HttpStatus httpStatus;
 	private final String status;
